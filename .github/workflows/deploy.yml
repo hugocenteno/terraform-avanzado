@@ -11,11 +11,18 @@ jobs:
 
     services:
       localstack:
-        image: localstack/localstack
+        image: localstack/localstack:latest
         ports:
           - 4566:4566
         env:
           SERVICES: s3,ec2
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+        options: >-
+          --health-cmd="curl -f http://localhost:4566/health || exit 1"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
 
     defaults:
       run:
@@ -29,7 +36,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Esperar a LocalStack
-        run: sleep 10
+        run: sleep 20
 
       - name: Terraform init
         run: terraform init
