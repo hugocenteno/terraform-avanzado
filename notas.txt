@@ -1,0 +1,3 @@
+# Notas temporales
+archivo para probar rebase
+mejora documentacion terraform
